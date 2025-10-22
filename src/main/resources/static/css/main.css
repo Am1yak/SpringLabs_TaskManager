@@ -193,3 +193,20 @@ input:checked + .slider:before {
 .delete-btn:hover {
     background-color: #cc0000;
 }
+
+.sort-btn {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    padding: 4px 8px;
+    margin-left: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: 0.2s;
+}
+
+.sort-btn:hover {
+    background-color: #2ea12e;
+    text-decoration: none;
+}

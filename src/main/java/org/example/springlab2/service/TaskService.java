@@ -53,13 +53,13 @@ public class TaskService {
     }
 
     public List<TaskDtoOutbound> sortByPriority(){
-        List<Task> sortedTasks = taskRepository.findAll();
+        List<Task> sortedTasks = new ArrayList<>(taskRepository.findAll());
         sortedTasks.sort(Comparator.comparing(Task::getPriority));
         return sortedTasks.stream().map(taskMapper::toDto).toList();
     }
 
     public List<TaskDtoOutbound> sortByDate(){
-        List<Task> sortedTasks = taskRepository.findAll();
+        List<Task> sortedTasks = new ArrayList<>(taskRepository.findAll());
         sortedTasks.sort(Comparator.comparing(Task::getDeadline));
         return sortedTasks.stream().map(taskMapper::toDto).toList();
     }

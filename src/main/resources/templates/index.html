@@ -17,8 +17,14 @@
             <tr>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Deadline</th>
-                <th>Priority</th>
+                <th>
+                    Deadline
+                    <a th:href="@{/tasks(sort='date')}" class="sort-btn">⇅</a>
+                </th>
+                <th>
+                    Priority
+                    <a th:href="@{/tasks(sort='priority')}" class="sort-btn">⇅</a>
+                </th>
                 <th>Completed</th>
                 <th>Delete</th>
             </tr>

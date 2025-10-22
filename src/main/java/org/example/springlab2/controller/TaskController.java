@@ -22,9 +22,17 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping()
-    public String getAll(Model model) {
-        model.addAttribute("tasks", taskService.findAll());
+    @GetMapping
+    public String getAll(
+            @RequestParam(name = "sort", required = false) String sort,
+            Model model) {
+        if ("priority".equals(sort)) {
+            model.addAttribute("tasks", taskService.sortByPriority());
+        } else if ("date".equals(sort)) {
+            model.addAttribute("tasks", taskService.sortByDate());
+        } else {
+            model.addAttribute("tasks", taskService.findAll());
+        }
         return "index.html";
     }
 
@@ -46,4 +54,16 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+    @PostMapping("/priority")
+    public String sortByPriority(Model model){
+        model.addAttribute("tasks", taskService.sortByPriority());
+        return "index.html";
+    }
+
+    @PostMapping("/date")
+    public String sortByDate(Model model){
+        model.addAttribute("tasks", taskService.sortByDate());
+        return "index.html";
+    }
+    
 }
