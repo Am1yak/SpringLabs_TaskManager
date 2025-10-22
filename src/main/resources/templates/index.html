@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
+    <title>Task List</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-    <h1>cacos</h1>
+<header>
+    <h1>Task List</h1>
+</header>
+
+<main class="main-container">
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Deadline</th>
+                <th>Priority</th>
+                <th>Completed</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${#temporals.format(task.deadline, 'dd.MM.yyyy')}"></td>
+                <td th:text="${task.priority}"></td>
+                <td>
+                    <form th:action="@{/tasks/complete/{id}(id=${task.id})}" method="post">
+                        <label class="switch">
+                            <input type="checkbox"
+                                   th:checked="${task.completed}"
+                                   onchange="this.form.submit()">
+                            <span class="slider round"></span>
+                        </label>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/tasks/{id}(id=${task.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="delete-btn">✖</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <section class="add-task-section">
+        <h2>Add Task</h2>
+        <form th:action="@{/tasks}" method="post" class="add-task-form">
+            <input type="text" name="title" placeholder="Title" required maxlength="50">
+            <input type="text" name="description" placeholder="Description" required>
+            <input type="date" name="deadline" required>
+            <input type="number" name="priority" min="1" max="10" placeholder="Priority" required>
+            <button type="submit">Add</button>
+        </form>
+    </section>
+</main>
+
+
 </body>
 </html>

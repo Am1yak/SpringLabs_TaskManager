@@ -10,7 +10,6 @@ import org.example.springlab2.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
-
 @Service
 public class TaskService {
 
@@ -45,11 +44,11 @@ public class TaskService {
         return taskRepository.findAll().stream().map(taskMapper::toDto).toList();
     }
 
-    public void markAsDone(UUID id){
+    public void toggleComplete(UUID id){
         Task task = taskRepository.findById(id).orElseThrow(
                 () -> new TaskNotFoundException("Task with id=" + id + "notfound")
         );
-        task.setCompleted(true);
+        task.setCompleted(!task.isCompleted());
         taskRepository.save(task);
     }
 
