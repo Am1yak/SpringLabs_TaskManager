@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: SpringLab2
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task_manager
+    username: postgres
+    password: postgres
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
+
+server:
+  port: 8080
+
+application:
+  jdbc:
+    repository:
+      type: template
