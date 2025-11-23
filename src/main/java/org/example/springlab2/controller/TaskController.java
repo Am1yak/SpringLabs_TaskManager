@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -38,7 +39,8 @@ public class TaskController {
     public List<TaskDtoOutbound> getAll(
             @RequestParam(required = false) String sort
             ) {
-        return switch (sort){
+        Optional<String> str_sort = Optional.ofNullable(sort);
+        return switch (str_sort.orElse("")) {
             case "priority" -> taskService.sortByPriority();
             case "date" -> taskService.sortByDate();
             default -> taskService.findAll();
