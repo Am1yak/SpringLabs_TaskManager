@@ -75,7 +75,6 @@ public class TaskController {
     description = "Delete task by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted task"),
-            @ApiResponse(responseCode = "404", description = "Task not found")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Task> deleteTask(@PathVariable("id") UUID id) {
