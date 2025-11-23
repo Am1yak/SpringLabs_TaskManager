@@ -39,8 +39,11 @@ public class TaskController {
     public List<TaskDtoOutbound> getAll(
             @RequestParam(required = false) String sort
             ) {
-        Optional<String> str_sort = Optional.ofNullable(sort);
-        return switch (str_sort.orElse("")) {
+        if (sort == null) {
+            return taskService.findAll();
+        }
+
+        return switch (sort) {
             case "priority" -> taskService.sortByPriority();
             case "date" -> taskService.sortByDate();
             default -> taskService.findAll();
