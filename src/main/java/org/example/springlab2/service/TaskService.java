@@ -30,7 +30,6 @@ public class TaskService {
             throw new TaskAlreadyExistsException("Task with this title is already exists");
 
         Task task = taskMapper.toEntity(inbound);
-        task.setId(UUID.randomUUID());
         return taskRepository.save(task);
     }
 

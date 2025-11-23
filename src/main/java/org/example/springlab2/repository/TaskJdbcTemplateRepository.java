@@ -22,12 +22,18 @@ public class TaskJdbcTemplateRepository implements TaskRepository{
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public TaskJdbcTemplateRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        System.out.println(
+                "========================================= JDBC Template INIT ========================================="
+        );
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public Task save(Task task) {;
+    public Task save(Task task) {
+        if(task.getId() == null)
+            task.setId(UUID.randomUUID());
+
         String sqlInsertQuery = "INSERT INTO tasks (id, title, description, completed, deadline, priority)" +
                                 "VALUES (:id, :title, :description, :completed, :deadline, :priority)";
 
@@ -39,7 +45,7 @@ public class TaskJdbcTemplateRepository implements TaskRepository{
                 .addValue("deadline", Date.valueOf(task.getDeadline()))
                 .addValue("priority", task.getPriority());
 
-        int update = namedParameterJdbcTemplate.update(sqlInsertQuery, parameters);
+        namedParameterJdbcTemplate.update(sqlInsertQuery, parameters);
         return task;
     }
 
@@ -100,7 +106,7 @@ public class TaskJdbcTemplateRepository implements TaskRepository{
     public Optional<Task> findByTitle(String title) {
         String sqlSelectByIdQuery = "SELECT * FROM tasks WHERE title = :title";
 
-        Map<String, String> parameters = Map.of("id", title);
+        Map<String, String> parameters = Map.of("title", title);
         Task task;
 
         try {
